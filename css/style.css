@@ -1,17 +1,20 @@
 :root {
-  --verde-oscuro: #1f3329;
-  --verde: #2f4f3e;
-  --verde-claro: #4d7a5f;
-  --naranja: #d97b3f;
-  --naranja-claro: #f0a868;
-  --crema: #faf6ef;
-  --crema-osc: #f0e9da;
-  --texto: #25302a;
-  --texto-suave: #5c6862;
-  --borde: #e1dccc;
+  /* Colores oficiales Manual de Marca Campo Base */
+  --naranja: #e9581d;          /* Color principal Campo Base */
+  --azul-oscuro: #1f284b;      /* Secundario */
+  --celeste: #73c7cf;          /* Acento turquesa */
+  --amarillo: #f2b508;         /* Acento amarillo */
+
+  /* Derivados para UI */
+  --naranja-claro: #f0a060;
+  --crema: #f7f8fa;
+  --crema-osc: #eef0f5;
+  --texto: #1a1e30;
+  --texto-suave: #5a6080;
+  --borde: #d8dce8;
   --blanco: #ffffff;
   --radio: 10px;
-  --sombra: 0 4px 16px rgba(31, 51, 41, 0.08);
+  --sombra: 0 4px 16px rgba(31, 40, 75, 0.10);
 }
 
 * { box-sizing: border-box; }
@@ -37,7 +40,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, var(--verde-oscuro), var(--verde) 60%, var(--verde-claro));
+  background: linear-gradient(160deg, var(--azul-oscuro), #2e3a6e 60%, #3d4e8a);
   padding: 20px;
 }
 
@@ -53,7 +56,7 @@ a { color: inherit; }
 
 .login-card h1 {
   font-size: 32px;
-  color: var(--verde-oscuro);
+  color: var(--azul-oscuro);
   margin-bottom: 6px;
 }
 
@@ -130,7 +133,7 @@ a { color: inherit; }
   transition: background 0.15s;
 }
 
-#login-form button[type="submit"]:hover { background: #c2682f; }
+#login-form button[type="submit"]:hover { background: #c24010; }
 
 .login-error {
   color: #b3261e;
@@ -141,7 +144,7 @@ a { color: inherit; }
 /* ---------- Header ---------- */
 
 .site-header {
-  background: #E8440A;
+  background: var(--naranja);
   color: white;
   position: sticky;
   top: 0;
@@ -160,37 +163,37 @@ a { color: inherit; }
 
 .brand { display: flex; flex-direction: column; gap: 4px; }
 .brand__logo { height: 40px; width: auto; display: block; }
-.brand__tag { font-size: 9px; color: var(--naranja-claro); letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+.brand__tag { font-size: 9px; color: rgba(255,255,255,0.85); letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
 .brand__logo-fv { height: 60px; width: auto; vertical-align: middle; }
 
 .main-nav { display: flex; gap: 24px; flex: 1; justify-content: center; }
 .main-nav a {
   text-decoration: none;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
   font-size: 14px;
   font-weight: 600;
   padding: 6px 2px;
   border-bottom: 2px solid transparent;
 }
-.main-nav a:hover, .main-nav a.active { color: white; border-bottom-color: var(--naranja); }
+.main-nav a:hover, .main-nav a.active { color: white; border-bottom-color: white; }
 
 .logout-btn {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.4);
   color: white;
   padding: 7px 14px;
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
 }
-.logout-btn:hover { background: rgba(255,255,255,0.1); }
+.logout-btn:hover { background: rgba(255,255,255,0.15); }
 
 /* ---------- Layout sections ---------- */
 
 .section { padding: 48px 24px; }
 .section--alt { background: var(--crema-osc); }
 .section__inner { max-width: 1080px; margin: 0 auto; }
-.section h2 { font-size: 26px; color: var(--verde-oscuro); margin-bottom: 10px; }
+.section h2 { font-size: 26px; color: var(--azul-oscuro); margin-bottom: 10px; }
 .section__intro { color: var(--texto-suave); max-width: 700px; margin-bottom: 28px; font-size: 15px; line-height: 1.5; }
 
 /* ---------- Filtros ---------- */
@@ -206,7 +209,7 @@ a { color: inherit; }
   cursor: pointer;
   color: var(--texto-suave);
 }
-.filter-btn.active, .filter-btn:hover { background: var(--verde-oscuro); color: white; border-color: var(--verde-oscuro); }
+.filter-btn.active, .filter-btn:hover { background: var(--azul-oscuro); color: white; border-color: var(--azul-oscuro); }
 
 /* ---------- Tarjetas tarifario ---------- */
 
@@ -226,7 +229,7 @@ a { color: inherit; }
 .excursion-card:hover { transform: translateY(-2px); }
 
 .excursion-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-.excursion-card__nombre { font-size: 17px; font-weight: 700; color: var(--verde-oscuro); }
+.excursion-card__nombre { font-size: 17px; font-weight: 700; color: var(--azul-oscuro); }
 .excursion-card__badge {
   font-size: 11px;
   font-weight: 700;
@@ -234,7 +237,7 @@ a { color: inherit; }
   padding: 3px 9px;
   border-radius: 12px;
   background: var(--crema-osc);
-  color: var(--verde);
+  color: var(--azul-oscuro);
   white-space: nowrap;
 }
 
@@ -253,7 +256,7 @@ a { color: inherit; }
 .precio-item__label { font-size: 11px; color: var(--texto-suave); text-transform: uppercase; letter-spacing: 0.03em; }
 .precio-item__valor { font-size: 15px; font-weight: 700; color: var(--texto); }
 .precio-item__valor.promo { color: var(--naranja); }
-.precio-item__valor.neto { color: var(--verde); }
+.precio-item__valor.neto { color: var(--azul-oscuro); }
 
 .excursion-card__neto {
   margin-top: 8px;
@@ -264,13 +267,13 @@ a { color: inherit; }
   justify-content: space-between;
   align-items: center;
 }
-.excursion-card__neto .label { font-size: 12px; font-weight: 700; color: var(--verde); }
-.excursion-card__neto .valor { font-size: 18px; font-weight: 800; color: var(--verde-oscuro); }
+.excursion-card__neto .label { font-size: 12px; font-weight: 700; color: var(--naranja); }
+.excursion-card__neto .valor { font-size: 18px; font-weight: 800; color: var(--azul-oscuro); }
 
 /* ---------- Modal de detalle ---------- */
 
 .modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.modal__backdrop { position: absolute; inset: 0; background: rgba(20, 30, 25, 0.55); }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(31, 40, 75, 0.55); }
 .modal__content {
   position: relative;
   background: white;
@@ -282,7 +285,7 @@ a { color: inherit; }
   padding: 28px;
   box-shadow: var(--sombra);
 }
-.modal__content h3 { color: var(--verde-oscuro); font-size: 22px; margin-bottom: 4px; }
+.modal__content h3 { color: var(--azul-oscuro); font-size: 22px; margin-bottom: 4px; }
 .modal__content .modal-close {
   position: absolute;
   top: 14px;
@@ -293,7 +296,7 @@ a { color: inherit; }
   cursor: pointer;
   color: var(--texto-suave);
 }
-.modal__content h4 { font-size: 13px; text-transform: uppercase; color: var(--verde); margin: 18px 0 6px; letter-spacing: 0.03em; }
+.modal__content h4 { font-size: 13px; text-transform: uppercase; color: var(--naranja); margin: 18px 0 6px; letter-spacing: 0.03em; }
 .modal__content ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
 .modal__content p { font-size: 14px; line-height: 1.6; margin: 4px 0; }
 
@@ -329,12 +332,12 @@ a { color: inherit; }
   font-size: 14px;
   cursor: pointer;
 }
-.armador-form button:hover { background: #c2682f; }
+.armador-form button:hover { background: #c24010; }
 
 .armador-resultado { margin-top: 28px; }
 
 .propuesta-resumen {
-  background: var(--verde-oscuro);
+  background: var(--azul-oscuro);
   color: white;
   border-radius: var(--radio);
   padding: 20px 24px;
@@ -345,7 +348,7 @@ a { color: inherit; }
 }
 .propuesta-resumen .stat { display: flex; flex-direction: column; }
 .propuesta-resumen .stat .num { font-size: 22px; font-weight: 800; }
-.propuesta-resumen .stat .lbl { font-size: 12px; color: var(--naranja-claro); text-transform: uppercase; }
+.propuesta-resumen .stat .lbl { font-size: 12px; color: var(--celeste); text-transform: uppercase; }
 
 .propuesta-dia {
   background: white;
@@ -359,7 +362,7 @@ a { color: inherit; }
   gap: 12px;
   flex-wrap: wrap;
 }
-.propuesta-dia__dia { font-weight: 700; color: var(--verde-oscuro); min-width: 130px; }
+.propuesta-dia__dia { font-weight: 700; color: var(--azul-oscuro); min-width: 130px; }
 .propuesta-dia__excursion { flex: 1; font-size: 14px; }
 .propuesta-dia__excursion .nombre { font-weight: 700; }
 .propuesta-dia__excursion .detalle { color: var(--texto-suave); font-size: 12px; }
@@ -385,7 +388,7 @@ a { color: inherit; }
   max-width: 420px;
 }
 .contacto-info p { margin: 8px 0; font-size: 14px; }
-.contacto-info strong { color: var(--verde-oscuro); }
+.contacto-info strong { color: var(--azul-oscuro); }
 
 /* ---------- Footer ---------- */
 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarifario Campo Base — Red Feliz Viaje</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Pantalla de acceso -->
+  <section id="login-screen" class="login-screen">
+    <div class="login-card">
+      <h1>Campo Base</h1>
+      <p class="login-subtitle">Tarifario para agencias — Red Feliz Viaje</p>
+      <form id="login-form">
+        <label for="clave">Clave de acceso</label>
+        <div class="password-field">
+          <input type="password" id="clave" name="clave" autocomplete="current-password" required>
+          <button type="button" id="toggle-clave" class="toggle-clave" aria-label="Mostrar clave" aria-pressed="false">&#128065;</button>
+        </div>
+        <button type="submit">Ingresar</button>
+        <p id="login-error" class="login-error" hidden>Clave incorrecta. Probá de nuevo.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contenido principal (oculto hasta login) -->
+  <div id="app" hidden>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <div class="brand">
+          <span class="brand__name">Campo Base</span>
+          <span class="brand__tag">Red Feliz Viaje</span>
+        </div>
+        <nav class="main-nav">
+          <a href="#tarifario" class="active">Tarifario</a>
+          <a href="#armador">Armador de experiencias</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <button id="logout-btn" class="logout-btn" title="Cerrar sesión">Salir</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="tarifario" class="section">
+        <div class="section__inner">
+          <h2>Tarifario de excursiones</h2>
+          <p class="section__intro">Precios vigentes. El <strong>neto agencia</strong> es lo que le corresponde cobrar a Campo Base; el precio público es de referencia para armar su propuesta al pasajero.</p>
+
+          <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="todas">Todas</button>
+            <button class="filter-btn" data-filter="dia-completo">Día completo</button>
+            <button class="filter-btn" data-filter="medio-dia">Medio día</button>
+          </div>
+
+          <div id="tarifario-list" class="tarifario-list">
+            <!-- Tarjetas de excursión generadas por JS -->
+          </div>
+        </div>
+      </section>
+
+      <section id="armador" class="section section--alt">
+        <div class="section__inner">
+          <h2>Armador de experiencias</h2>
+          <p class="section__intro">Cargá el presupuesto total del grupo, los días de estadía y la cantidad de personas. El sistema arma automáticamente una propuesta de excursiones que mejor aprovecha el presupuesto, respetando los días de salida de cada excursión y sin repetir ni superponer excursiones en un mismo día.</p>
+
+          <form id="armador-form" class="armador-form">
+            <div class="armador-form__row">
+              <div class="field">
+                <label for="presupuesto">Presupuesto total del grupo ($)</label>
+                <input type="number" id="presupuesto" min="1000" step="1000" required placeholder="Ej: 400000">
+              </div>
+              <div class="field">
+                <label for="dias">Días de estadía</label>
+                <input type="number" id="dias" min="1" max="20" required placeholder="Ej: 4">
+              </div>
+              <div class="field">
+                <label for="personas">Cantidad de personas</label>
+                <input type="number" id="personas" min="1" max="50" required placeholder="Ej: 2">
+              </div>
+              <div class="field">
+                <label for="fecha-inicio">Fecha de llegada (opcional)</label>
+                <input type="date" id="fecha-inicio">
+              </div>
+            </div>
+            <button type="submit">Armar propuesta</button>
+          </form>
+
+          <div id="armador-resultado" class="armador-resultado"></div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section">
+        <div class="section__inner">
+          <h2>Contacto</h2>
+          <div id="contacto-info" class="contacto-info"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="anio"></span> Campo Base — Red Feliz Viaje</p>
+    </footer>
+  </div>
+
+  <!-- Modal de detalle de excursión -->
+  <div id="detalle-modal" class="modal" hidden>
+    <div class="modal__backdrop" id="modal-backdrop"></div>
+    <div class="modal__content" id="modal-content"></div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

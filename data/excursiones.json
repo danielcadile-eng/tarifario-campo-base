@@ -1,0 +1,251 @@
+{
+  "agencia": {
+    "nombre": "Campo Base",
+    "red": "Feliz Viaje",
+    "direccion": "Peatonal Sarmiento 231, Mendoza",
+    "whatsapp": "+54 9 261-667 1688",
+    "instagram": "@campobaseturismo"
+  },
+  "excursiones": [
+    {
+      "id": "alta-montania",
+      "nombre": "Alta Montaña",
+      "categoria": "dia-completo",
+      "salidas": "Todos los días",
+      "horario": "7:30 a 19:30 hs",
+      "duracion_horas": 12,
+      "pickup": "Alojamientos dentro del centro de Mendoza",
+      "recorrido": ["Cacheuta", "Potrerillos", "Uspallata", "Los Penitentes", "Puente del Inca", "Parque Cº Aconcagua", "Las Cuevas"],
+      "incluye": ["Traslado ida y vuelta"],
+      "no_incluye": ["Comidas", "Alquiler de indumentaria para nieve (disponible en Uspallata)"],
+      "precios": {
+        "efectivo_transferencia": 76000,
+        "promo": { "precio": 69000, "dias": ["lunes", "miercoles", "viernes"] },
+        "tarjeta": { "precio": 95000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 20
+    },
+    {
+      "id": "bodegas-y-oliva",
+      "nombre": "Bodegas y Oliva",
+      "categoria": "medio-dia",
+      "salidas": "Lunes a sábado",
+      "horario": "14:00 a 19:30 hs",
+      "duracion_horas": 5.5,
+      "pickup": "Radio céntrico de Mendoza",
+      "recorrido": ["3 bodegas (rotan entre Vistandes, Viña El Cerno, Florio)", "1 olivícola (Centenario)"],
+      "incluye": ["Traslado", "Visita guiada", "Degustación"],
+      "no_incluye": [],
+      "precios": {
+        "efectivo_transferencia": 42000,
+        "promo": { "precio": 38000, "dias": ["martes", "jueves", "sabado"] },
+        "tarjeta": { "precio": 53000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 20
+    },
+    {
+      "id": "canon-del-atuel",
+      "nombre": "Cañón del Atuel",
+      "categoria": "dia-completo",
+      "salidas": "Jueves y domingo",
+      "horario": "7:00 a 21:30 hs",
+      "duracion_horas": 14.5,
+      "pickup": "Radio céntrico de Mendoza",
+      "recorrido": ["Embalse Los Reyunos", "Embalse Valle Grande", "Cañón del Atuel"],
+      "incluye": ["Traslado"],
+      "no_incluye": ["Comidas", "Actividades opcionales (rafting, tirolesa, arborismo, catamarán)"],
+      "precios": {
+        "efectivo_transferencia": 87000,
+        "promo": { "precio": 79000, "dias": ["domingo"] },
+        "tarjeta": { "precio": 109000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 20
+    },
+    {
+      "id": "termas-spa-cacheuta",
+      "nombre": "Termas Spa Cacheuta - Full Day",
+      "categoria": "dia-completo",
+      "salidas": "Todos los días",
+      "horario": "9:00 a 18:00 hs",
+      "duracion_horas": 9,
+      "pickup": "Algunos hoteles del centro de Mendoza",
+      "recorrido": ["Terma-Spa Cacheuta"],
+      "incluye": ["+10 piletones de piedra con hidroterapia junto al Río Mendoza", "Fangoterapia", "Hidroterapia", "La Gruta (vaporarium natural)", "Almuerzo buffet criollo", "Traslado ida y vuelta"],
+      "no_incluye": ["Bebidas del almuerzo"],
+      "precios": {
+        "efectivo_transferencia": 170000,
+        "promo": null,
+        "tarjeta": { "precio": 220000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "termas-cacheuta-parque-termal",
+      "nombre": "Termas de Cacheuta - Parque Termal",
+      "categoria": "dia-completo",
+      "salidas": "A consultar",
+      "horario": "9:15 a 18:00 hs",
+      "duracion_horas": 9,
+      "pickup": "Punto de encuentro: calle Chile y Sarmiento, cerca de Plaza Independencia (no incluye pickup en hotel)",
+      "recorrido": ["Parque Termal Cacheuta"],
+      "incluye": ["Entrada a las piletas termales de distintas temperaturas con vista a la montaña"],
+      "no_incluye": ["Almuerzo"],
+      "precios": {
+        "efectivo_transferencia": 55000,
+        "promo": null,
+        "tarjeta": { "precio": 65500, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "vale-de-uco",
+      "nombre": "Vale de Uco",
+      "categoria": "dia-completo",
+      "salidas": "Viernes",
+      "horario": "8:00 a 18:00 hs",
+      "duracion_horas": 10,
+      "pickup": "Radio céntrico de Mendoza",
+      "recorrido": ["Tupungato (Ruta de los Cerrillos, Cristo Rey del Valle, Corredor Productivo)", "Bodega Piedra Negra", "Tunuyán (Manzano Histórico)"],
+      "incluye": ["Traslado"],
+      "no_incluye": ["Comidas", "Degustación Premium Bodega Piedra Negra (aprox. $21.000 extra por persona)"],
+      "precios": {
+        "efectivo_transferencia": 76000,
+        "promo": null,
+        "tarjeta": { "precio": 95000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 20
+    },
+    {
+      "id": "villavicencio",
+      "nombre": "Villavicencio",
+      "categoria": "medio-dia",
+      "salidas": "Miércoles y sábado",
+      "horario": "7:30 a 13:30 hs",
+      "duracion_horas": 6,
+      "pickup": "Radio céntrico de Mendoza",
+      "recorrido": ["Reserva Natural y Hotel de Villavicencio", "Caracoles", "Monumento de Canota"],
+      "incluye": ["Traslado"],
+      "no_incluye": ["Entrada a la reserva (aprox. $20.000 por persona, pago obligatorio en destino)"],
+      "precios": {
+        "efectivo_transferencia": 45000,
+        "promo": null,
+        "tarjeta": { "precio": 55000, "cuotas": null, "interes": null }
+      },
+      "comision_pct": 20
+    },
+    {
+      "id": "tour-privado-bodegas-premium",
+      "nombre": "Tour Privado de Bodegas (Premium)",
+      "categoria": "dia-completo",
+      "salidas": "Todos los días (según disponibilidad)",
+      "horario": "Pickup 10:00 hs",
+      "duracion_horas": null,
+      "pickup": "Radio céntrico de Mendoza, zona Luján de Cuyo",
+      "recorrido": ["Bodega Terrazas de los Andes (Chandon): recorrido + degustación 4 vinos línea Premium", "Bodega Foster Lorca: almuerzo de 3 pasos con maridaje", "Bodega Carmine Granata: visita guiada + degustación 5 vinos con maridaje de quesos"],
+      "incluye": ["Traslado en auto privado", "Visitas y degustaciones en las 3 bodegas", "Almuerzo de 3 pasos con maridaje"],
+      "no_incluye": [],
+      "precios": {
+        "efectivo_transferencia": 215000,
+        "promo": null,
+        "tarjeta": { "precio": 277000, "cuotas": null, "interes": null }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "cabalgata-atardecer",
+      "nombre": "Cabalgata del Atardecer",
+      "categoria": "dia-completo",
+      "salidas": "Todos los días",
+      "horario": "15:00 a 22:00 hs",
+      "duracion_horas": 7,
+      "pickup": "Radio céntrico de Mendoza (15:00-15:30)",
+      "recorrido": ["Chacras de Coria, Luján de Cuyo"],
+      "incluye": ["Traslado ida y vuelta", "Poncho y boina para cada participante", "2 a 2.5 horas de cabalgata guiada", "Asado completo (vacío, tapa de asado, punta de espalda, chorizo) con vino, gaseosa y agua", "Opciones vegetariana y vegana", "Música en vivo (guitarrista)", "Guía bilingüe", "Seguro de personas"],
+      "no_incluye": [],
+      "precios": {
+        "efectivo_transferencia": 170000,
+        "promo": null,
+        "tarjeta": { "precio": 201000, "cuotas": null, "interes": null }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "parapente",
+      "nombre": "Vuelo en Parapente",
+      "categoria": "medio-dia",
+      "salidas": "Todos los días",
+      "horario": "A consultar (según clima)",
+      "duracion_horas": null,
+      "pickup": null,
+      "recorrido": ["Zona del Challao, oeste de Mendoza"],
+      "incluye": ["Vuelo de aprox. 25 min con instructor", "Video de cortesía"],
+      "no_incluye": [],
+      "precios": {
+        "efectivo_transferencia": 190000,
+        "promo": null,
+        "tarjeta": { "precio": 215000, "cuotas": null, "interes": null }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "rafting-potrerillos",
+      "nombre": "Rafting en Potrerillos (12K)",
+      "categoria": "medio-dia",
+      "salidas": "A consultar",
+      "horario": "9:00 a 17:30 hs",
+      "duracion_horas": null,
+      "pickup": "Opcional, ver extras",
+      "recorrido": ["Río Mendoza, Potrerillos - recorrido de 12 km, 50 min a 1h15 en el agua según caudal"],
+      "incluye": ["Acceso a parador con baños, vestidores, lockers y restaurante"],
+      "no_incluye": [],
+      "extras_opcionales": [
+        { "nombre": "Traslado propio (pickup en alojamiento céntrico)", "precio": 35500 },
+        { "nombre": "Traslado en bus Andesmar (desde Terminal de Buses)", "precio": 15000 }
+      ],
+      "precios": {
+        "efectivo_transferencia": 60000,
+        "promo": null,
+        "tarjeta": { "precio": 72000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "penitentes-los-puquios",
+      "nombre": "Penitentes - Los Puquios",
+      "categoria": "dia-completo",
+      "salidas": "Según disponibilidad",
+      "horario": "Salida 7:30 AM, regreso a ciudad 20:00 hs aprox",
+      "duracion_horas": 12.5,
+      "pickup": "Av. Las Heras 529, Ciudad, American Ski (no incluye pickup en alojamiento)",
+      "recorrido": ["Centro de ski Penitentes / Los Puquios"],
+      "incluye": ["Transporte ida y vuelta desde domicilio de salida", "Equipo de indumentaria completo (enterito, botas, guantes) o equipo de ski (tabla, bastones, botas)"],
+      "no_incluye": [],
+      "notas": ["Esquí permitido solo de 11hs al cierre de pistas", "Presentarse hasta las 20hs del día anterior para prueba de equipos y registro"],
+      "precios": {
+        "efectivo_transferencia": 79000,
+        "promo": null,
+        "tarjeta": { "precio": 110000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 10
+    },
+    {
+      "id": "las-lenas",
+      "nombre": "Las Leñas",
+      "categoria": "dia-completo",
+      "salidas": "Según disponibilidad",
+      "horario": "Salida 6:00 AM, regreso a ciudad 22:00 hs aprox",
+      "duracion_horas": 16,
+      "pickup": "Av. Las Heras 529, Ciudad, American Ski (no incluye pickup en alojamiento)",
+      "recorrido": ["Centro de ski Las Leñas"],
+      "incluye": ["Transporte ida y vuelta desde domicilio de salida", "Equipo de indumentaria completo (enterito, botas, guantes) o equipo de ski (tabla, bastones, botas)"],
+      "no_incluye": [],
+      "notas": ["Esquí permitido solo de 11hs al cierre de pistas", "Presentarse hasta las 20hs del día anterior para prueba de equipos y registro"],
+      "precios": {
+        "efectivo_transferencia": 99000,
+        "promo": null,
+        "tarjeta": { "precio": 130000, "cuotas": 3, "interes": false }
+      },
+      "comision_pct": 10
+    }
+  ]
+}

@@ -141,7 +141,7 @@ a { color: inherit; }
 /* ---------- Header ---------- */
 
 .site-header {
-  background: var(--verde-oscuro);
+  background: #D94E1F;
   color: white;
   position: sticky;
   top: 0;

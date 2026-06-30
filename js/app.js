@@ -242,6 +242,9 @@
 
   // ===================== ARMADOR DE EXPERIENCIAS =====================
 
+  // Estado mutable de la propuesta actual (para personalización)
+  var propuestaActual = null;
+
   function setupArmadorForm() {
     var form = document.getElementById("armador-form");
     form.addEventListener("submit", function (e) {
@@ -259,7 +262,48 @@
       var fechaInicio = fechaInicioStr ? new Date(fechaInicioStr + "T00:00:00") : null;
 
       var resultado = armarPropuesta(data.excursiones, dias, presupuestoPorPersona, fechaInicio);
-      renderResultadoArmador(resultado, dias, presupuesto, presupuestoPorPersona, personas, fechaInicio);
+
+      propuestaActual = {
+        asignacion: resultado.asignacion,
+        dias: dias,
+        presupuesto: presupuesto,
+        presupuestoPorPersona: presupuestoPorPersona,
+        personas: personas,
+        fechaInicio: fechaInicio
+      };
+
+      renderResultadoArmador();
+    });
+
+    // Delegación de eventos para reemplazos
+    document.getElementById("armador-resultado").addEventListener("click", function (e) {
+      var toggleBtn = e.target.closest(".reemplazo-toggle");
+      var optionBtn = e.target.closest(".reemplazo-opcion");
+
+      if (toggleBtn) {
+        var diaIdx = parseInt(toggleBtn.dataset.dia, 10);
+        var panel = document.getElementById("reemplazo-panel-" + diaIdx);
+        var abierto = panel.hidden === false;
+        // Cerrar todos los paneles
+        document.querySelectorAll(".reemplazo-panel").forEach(function (p) { p.hidden = true; });
+        document.querySelectorAll(".reemplazo-toggle").forEach(function (b) { b.classList.remove("activo"); });
+        if (!abierto) {
+          panel.hidden = false;
+          toggleBtn.classList.add("activo");
+        }
+        return;
+      }
+
+      if (optionBtn) {
+        var diaIdx = parseInt(optionBtn.dataset.dia, 10);
+        var exId = optionBtn.dataset.exid;
+        var precio = parseFloat(optionBtn.dataset.precio);
+        var ex = excursionesById[exId];
+        if (!ex) return;
+        propuestaActual.asignacion[diaIdx] = { ex: ex, precio: precio };
+        renderResultadoArmador();
+        return;
+      }
     });
   }
 
@@ -419,13 +463,28 @@
     };
   }
 
-  function renderResultadoArmador(resultado, dias, presupuesto, presupuestoPorPersona, personas, fechaInicio) {
-    var el = document.getElementById("armador-resultado");
-    var asignacion = resultado.asignacion;
-    var totalPorPersona = resultado.totalPorPersona;
+  function renderResultadoArmador() {
+    if (!propuestaActual) return;
+    var asignacion = propuestaActual.asignacion;
+    var dias = propuestaActual.dias;
+    var presupuesto = propuestaActual.presupuesto;
+    var presupuestoPorPersona = propuestaActual.presupuestoPorPersona;
+    var personas = propuestaActual.personas;
+    var fechaInicio = propuestaActual.fechaInicio;
+
+    var totalPorPersona = asignacion.reduce(function (sum, a) { return sum + (a ? a.precio : 0); }, 0);
     var totalGrupo = totalPorPersona * personas;
     var sobrante = presupuesto - totalGrupo;
     var excursionesAsignadas = asignacion.filter(function (a) { return a !== null; }).length;
+
+    // IDs ya usados en la propuesta actual
+    function idsUsados(excluirDia) {
+      var usados = {};
+      asignacion.forEach(function (a, i) {
+        if (a && i !== excluirDia) usados[a.ex.id] = true;
+      });
+      return usados;
+    }
 
     var html = '';
 
@@ -442,25 +501,86 @@
 
     for (var d = 0; d < dias; d++) {
       var asignada = asignacion[d];
-      var nombreDia = resultado.candidatasPorDia[d].nombreDia;
+      var nombreDia = nombreDiaSemana(fechaInicio, d);
       var etiquetaDia = 'Día ' + (d + 1) + (nombreDia ? ' (' + capitalizar(nombreDia) + ')' : '');
 
       if (asignada) {
-        html += '<div class="propuesta-dia">' +
-          '<div class="propuesta-dia__dia">' + etiquetaDia + '</div>' +
-          '<div class="propuesta-dia__excursion"><span class="nombre">' + escapeHtml(asignada.ex.nombre) + '</span><br><span class="detalle">' + escapeHtml(asignada.ex.horario) + '</span></div>' +
-          '<div class="propuesta-dia__precio">' + formatoMoneda(asignada.precio) + ' / persona</div>' +
-          '</div>';
+        // Calcular presupuesto disponible para este slot: lo que no se gastó en los otros días
+        var budgetSlot = presupuestoPorPersona - (totalPorPersona - asignada.precio);
+        var usados = idsUsados(d);
+
+        // Opciones de reemplazo: disponibles ese día, dentro del budget, no ya usadas
+        var opciones = data.excursiones
+          .filter(function (ex) {
+            return ex.id !== asignada.ex.id && !usados[ex.id] && excursionDisponibleEnDia(ex, nombreDia);
+          })
+          .map(function (ex) { return { ex: ex, precio: precioEnDia(ex, nombreDia) }; })
+          .filter(function (c) { return c.precio <= budgetSlot; })
+          .sort(function (a, b) { return a.ex.prioridad - b.ex.prioridad || b.precio - a.precio; });
+
+        var opcionesHtml = '';
+        if (opciones.length === 0) {
+          opcionesHtml = '<p class="reemplazo-vacio">No hay otras excursiones disponibles para este día dentro del presupuesto.</p>';
+        } else {
+          opciones.forEach(function (op) {
+            opcionesHtml += '<button class="reemplazo-opcion" data-dia="' + d + '" data-exid="' + op.ex.id + '" data-precio="' + op.precio + '">' +
+              '<span class="reemplazo-opcion__nombre">' + escapeHtml(op.ex.nombre) + '</span>' +
+              '<span class="reemplazo-opcion__detalle">' + escapeHtml(op.ex.horario) + ' · P' + op.ex.prioridad + '</span>' +
+              '<span class="reemplazo-opcion__precio">' + formatoMoneda(op.precio) + '</span>' +
+              '</button>';
+          });
+        }
+
+        html += '<div class="propuesta-dia-wrap">' +
+          '<div class="propuesta-dia">' +
+            '<div class="propuesta-dia__dia">' + etiquetaDia + '</div>' +
+            '<div class="propuesta-dia__excursion"><span class="nombre">' + escapeHtml(asignada.ex.nombre) + '</span><br><span class="detalle">' + escapeHtml(asignada.ex.horario) + '</span></div>' +
+            '<div class="propuesta-dia__precio">' + formatoMoneda(asignada.precio) + ' / persona</div>' +
+            '<button class="reemplazo-toggle" data-dia="' + d + '" title="Ver opciones de reemplazo">&#8645; Cambiar</button>' +
+          '</div>' +
+          '<div class="reemplazo-panel" id="reemplazo-panel-' + d + '" hidden>' +
+            '<p class="reemplazo-panel__titulo">Reemplazar por:</p>' +
+            opcionesHtml +
+          '</div>' +
+        '</div>';
       } else {
-        html += '<div class="propuesta-dia libre">' +
-          '<div class="propuesta-dia__dia">' + etiquetaDia + '</div>' +
-          '<div class="propuesta-dia__excursion">Día libre</div>' +
-          '<div class="propuesta-dia__precio">—</div>' +
-          '</div>';
+        // Día libre: ofrecer agregar excursión
+        var usadosLibre = idsUsados(d);
+        var opcionesLibre = data.excursiones
+          .filter(function (ex) { return !usadosLibre[ex.id] && excursionDisponibleEnDia(ex, nombreDia); })
+          .map(function (ex) { return { ex: ex, precio: precioEnDia(ex, nombreDia) }; })
+          .filter(function (c) { return c.precio <= (presupuestoPorPersona - totalPorPersona); })
+          .sort(function (a, b) { return a.ex.prioridad - b.ex.prioridad || b.precio - a.precio; });
+
+        var opcionesLibreHtml = '';
+        if (opcionesLibre.length === 0) {
+          opcionesLibreHtml = '<p class="reemplazo-vacio">No hay excursiones disponibles para agregar en este día dentro del presupuesto restante.</p>';
+        } else {
+          opcionesLibre.forEach(function (op) {
+            opcionesLibreHtml += '<button class="reemplazo-opcion" data-dia="' + d + '" data-exid="' + op.ex.id + '" data-precio="' + op.precio + '">' +
+              '<span class="reemplazo-opcion__nombre">' + escapeHtml(op.ex.nombre) + '</span>' +
+              '<span class="reemplazo-opcion__detalle">' + escapeHtml(op.ex.horario) + ' · P' + op.ex.prioridad + '</span>' +
+              '<span class="reemplazo-opcion__precio">' + formatoMoneda(op.precio) + '</span>' +
+              '</button>';
+          });
+        }
+
+        html += '<div class="propuesta-dia-wrap">' +
+          '<div class="propuesta-dia libre">' +
+            '<div class="propuesta-dia__dia">' + etiquetaDia + '</div>' +
+            '<div class="propuesta-dia__excursion">Día libre</div>' +
+            '<div class="propuesta-dia__precio">—</div>' +
+            '<button class="reemplazo-toggle" data-dia="' + d + '" title="Agregar excursión">+ Agregar</button>' +
+          '</div>' +
+          '<div class="reemplazo-panel" id="reemplazo-panel-' + d + '" hidden>' +
+            '<p class="reemplazo-panel__titulo">Agregar excursión:</p>' +
+            opcionesLibreHtml +
+          '</div>' +
+        '</div>';
       }
     }
 
-    el.innerHTML = html;
+    document.getElementById("armador-resultado").innerHTML = html;
   }
 
 })();

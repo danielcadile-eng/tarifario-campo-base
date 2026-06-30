@@ -315,70 +315,107 @@
     return precios.efectivo_transferencia;
   }
 
-  // Algoritmo: branch & bound para maximizar el aprovechamiento del presupuesto,
-  // asignando como máximo una excursión por día, sin repetir excursiones,
-  // respetando los días de salida de cada excursión.
+  // Algoritmo: prioridad 1 → 2 → 3. Dentro de cada nivel, branch & bound para
+  // maximizar el uso del presupuesto. Solo pasa al nivel siguiente si hay días
+  // o presupuesto sin cubrir tras agotar las opciones del nivel anterior.
   function armarPropuesta(excursiones, dias, presupuestoPorPersona, fechaInicio) {
-    // Para cada día, lista de candidatas (excursion, precio) ordenadas por precio descendente
-    var candidatasPorDia = [];
+    // Construye candidatas por día filtrando por nivel de prioridad
+    function candidatasPorDiaParaNivel(nivel) {
+      var pool = [];
+      for (var d = 0; d < dias; d++) {
+        var nombreDia = nombreDiaSemana(fechaInicio, d);
+        var cands = excursiones
+          .filter(function (ex) { return ex.prioridad === nivel && excursionDisponibleEnDia(ex, nombreDia); })
+          .map(function (ex) { return { ex: ex, precio: precioEnDia(ex, nombreDia) }; })
+          .filter(function (c) { return c.precio <= presupuestoPorPersona; })
+          .sort(function (a, b) { return b.precio - a.precio; });
+        pool.push({ nombreDia: nombreDia, candidatas: cands });
+      }
+      return pool;
+    }
+
+    // Branch & bound sobre los días, respetando días ya asignados y excursiones ya usadas.
+    // asignacionFija: array de largo `dias`, null = libre, objeto = ya asignado.
+    // presupuestoRestante: cuánto queda por gastar por persona.
+    // excluidos: set de ids ya usados en asignaciones fijas o niveles anteriores.
+    function resolver(candidatasPorDia, asignacionFija, presupuestoRestante, excluidos) {
+      var maxRestante = new Array(dias + 1).fill(0);
+      for (var i = dias - 1; i >= 0; i--) {
+        if (asignacionFija[i] !== null) { maxRestante[i] = maxRestante[i + 1]; continue; }
+        var disponibles = candidatasPorDia[i].candidatas.filter(function (c) { return !excluidos[c.ex.id]; });
+        var maxDia = disponibles.length ? disponibles[0].precio : 0;
+        maxRestante[i] = maxRestante[i + 1] + maxDia;
+      }
+
+      var mejor = { total: -1, asignacion: asignacionFija.slice() };
+      var usados = Object.assign({}, excluidos);
+      var actual = asignacionFija.slice();
+      var llamadas = 0;
+      var LIMITE = 400000;
+
+      function backtrack(d, totalActual) {
+        llamadas++;
+        if (llamadas > LIMITE) return;
+        if (totalActual > mejor.total) {
+          mejor.total = totalActual;
+          mejor.asignacion = actual.slice();
+        }
+        if (d === dias) return;
+        if (totalActual + maxRestante[d] <= mejor.total) return;
+
+        // Día ya fijado: saltar
+        if (actual[d] !== null) { backtrack(d + 1, totalActual); return; }
+
+        var disponibles = candidatasPorDia[d].candidatas.filter(function (c) { return !usados[c.ex.id]; });
+        for (var i = 0; i < disponibles.length; i++) {
+          var cand = disponibles[i];
+          if (totalActual + cand.precio > presupuestoRestante) continue;
+          usados[cand.ex.id] = true;
+          actual[d] = cand;
+          backtrack(d + 1, totalActual + cand.precio);
+          actual[d] = null;
+          usados[cand.ex.id] = false;
+        }
+        backtrack(d + 1, totalActual); // día libre
+      }
+
+      backtrack(0, 0);
+      return mejor;
+    }
+
+    // Construimos candidatas globales para el render (todos los niveles, para conocer el día/nombre)
+    var todasCandidatasPorDia = [];
     for (var d = 0; d < dias; d++) {
       var nombreDia = nombreDiaSemana(fechaInicio, d);
-      var candidatas = excursiones
-        .filter(function (ex) { return excursionDisponibleEnDia(ex, nombreDia); })
-        .map(function (ex) { return { ex: ex, precio: precioEnDia(ex, nombreDia) }; })
-        .filter(function (c) { return c.precio <= presupuestoPorPersona; })
-        .sort(function (a, b) { return b.precio - a.precio; });
-      candidatasPorDia.push({ nombreDia: nombreDia, candidatas: candidatas });
+      todasCandidatasPorDia.push({ nombreDia: nombreDia, candidatas: [] });
     }
 
-    // Máximo precio posible restante desde el día d en adelante (para poda)
-    var maxRestante = new Array(dias + 1).fill(0);
-    for (var i = dias - 1; i >= 0; i--) {
-      var maxDia = candidatasPorDia[i].candidatas.length ? candidatasPorDia[i].candidatas[0].precio : 0;
-      maxRestante[i] = maxRestante[i + 1] + maxDia;
-    }
+    // Fase 1: prioridad 1
+    var asignacion = new Array(dias).fill(null);
+    var excluidos = {};
+    var gastado = 0;
 
-    var mejor = { total: -1, asignacion: new Array(dias).fill(null) };
-    var usados = {};
-    var actual = new Array(dias).fill(null);
-    var llamadas = 0;
-    var LIMITE_LLAMADAS = 400000;
-
-    function backtrack(d, totalActual) {
-      llamadas++;
-      if (llamadas > LIMITE_LLAMADAS) return; // salvaguarda de rendimiento
-
-      if (totalActual > mejor.total) {
-        mejor.total = totalActual;
-        mejor.asignacion = actual.slice();
+    for (var nivel = 1; nivel <= 3; nivel++) {
+      var candsPorDia = candidatasPorDiaParaNivel(nivel);
+      var resultado = resolver(candsPorDia, asignacion, presupuestoPorPersona - gastado, excluidos);
+      // Incorporar lo nuevo al estado acumulado
+      for (var d2 = 0; d2 < dias; d2++) {
+        if (asignacion[d2] === null && resultado.asignacion[d2] !== null) {
+          var asig = resultado.asignacion[d2];
+          asignacion[d2] = asig;
+          gastado += asig.precio;
+          excluidos[asig.ex.id] = true;
+        }
       }
-
-      if (d === dias) return;
-      if (totalActual + maxRestante[d] <= mejor.total) return; // poda: no puede superar lo mejor encontrado
-
-      var candidatas = candidatasPorDia[d].candidatas;
-      for (var i = 0; i < candidatas.length; i++) {
-        var cand = candidatas[i];
-        if (usados[cand.ex.id]) continue;
-        if (totalActual + cand.precio > presupuestoPorPersona) continue;
-
-        usados[cand.ex.id] = true;
-        actual[d] = cand;
-        backtrack(d + 1, totalActual + cand.precio);
-        actual[d] = null;
-        usados[cand.ex.id] = false;
-      }
-
-      // Opción: dejar el día libre
-      backtrack(d + 1, totalActual);
+      // Si todos los días están cubiertos o no queda presupuesto, parar
+      var diasLibres = asignacion.filter(function (a) { return a === null; }).length;
+      if (diasLibres === 0 || gastado >= presupuestoPorPersona) break;
     }
-
-    backtrack(0, 0);
 
     return {
-      asignacion: mejor.asignacion,
-      totalPorPersona: mejor.total < 0 ? 0 : mejor.total,
-      candidatasPorDia: candidatasPorDia
+      asignacion: asignacion,
+      totalPorPersona: gastado,
+      candidatasPorDia: todasCandidatasPorDia
     };
   }
 

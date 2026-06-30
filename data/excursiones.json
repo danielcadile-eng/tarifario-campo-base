@@ -9,6 +9,7 @@
   "excursiones": [
     {
       "id": "alta-montania",
+      "prioridad": 1,
       "nombre": "Alta Montaña",
       "categoria": "dia-completo",
       "salidas": "Todos los días",
@@ -27,6 +28,7 @@
     },
     {
       "id": "bodegas-y-oliva",
+      "prioridad": 1,
       "nombre": "Bodegas y Oliva",
       "categoria": "medio-dia",
       "salidas": "Lunes a sábado",
@@ -45,6 +47,7 @@
     },
     {
       "id": "canon-del-atuel",
+      "prioridad": 1,
       "nombre": "Cañón del Atuel",
       "categoria": "dia-completo",
       "salidas": "Jueves y domingo",
@@ -63,6 +66,7 @@
     },
     {
       "id": "termas-spa-cacheuta",
+      "prioridad": 1,
       "nombre": "Termas Spa Cacheuta - Full Day",
       "categoria": "dia-completo",
       "salidas": "Todos los días",
@@ -81,6 +85,7 @@
     },
     {
       "id": "termas-cacheuta-parque-termal",
+      "prioridad": 3,
       "nombre": "Termas de Cacheuta - Parque Termal",
       "categoria": "dia-completo",
       "salidas": "A consultar",
@@ -99,6 +104,7 @@
     },
     {
       "id": "vale-de-uco",
+      "prioridad": 3,
       "nombre": "Vale de Uco",
       "categoria": "dia-completo",
       "salidas": "Viernes",
@@ -117,6 +123,7 @@
     },
     {
       "id": "villavicencio",
+      "prioridad": 3,
       "nombre": "Villavicencio",
       "categoria": "medio-dia",
       "salidas": "Miércoles y sábado",
@@ -135,6 +142,7 @@
     },
     {
       "id": "tour-privado-bodegas-premium",
+      "prioridad": 3,
       "nombre": "Tour Privado de Bodegas (Premium)",
       "categoria": "dia-completo",
       "salidas": "Todos los días (según disponibilidad)",
@@ -153,6 +161,7 @@
     },
     {
       "id": "cabalgata-atardecer",
+      "prioridad": 2,
       "nombre": "Cabalgata del Atardecer",
       "categoria": "dia-completo",
       "salidas": "Todos los días",
@@ -171,6 +180,7 @@
     },
     {
       "id": "parapente",
+      "prioridad": 2,
       "nombre": "Vuelo en Parapente",
       "categoria": "medio-dia",
       "salidas": "Todos los días",
@@ -189,6 +199,7 @@
     },
     {
       "id": "rafting-potrerillos",
+      "prioridad": 2,
       "nombre": "Rafting en Potrerillos (12K)",
       "categoria": "medio-dia",
       "salidas": "A consultar",
@@ -211,6 +222,7 @@
     },
     {
       "id": "penitentes-los-puquios",
+      "prioridad": 2,
       "nombre": "Penitentes - Los Puquios",
       "categoria": "dia-completo",
       "salidas": "Según disponibilidad",
@@ -230,6 +242,7 @@
     },
     {
       "id": "las-lenas",
+      "prioridad": 2,
       "nombre": "Las Leñas",
       "categoria": "dia-completo",
       "salidas": "Según disponibilidad",

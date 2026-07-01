@@ -252,14 +252,22 @@
       if (!data) return;
 
       var presupuesto = parseFloat(document.getElementById("presupuesto").value);
-      var dias = parseInt(document.getElementById("dias").value, 10);
       var personas = parseInt(document.getElementById("personas").value, 10);
       var fechaInicioStr = document.getElementById("fecha-inicio").value;
+      var fechaSalidaStr = document.getElementById("fecha-salida").value;
 
-      if (!presupuesto || !dias || !personas) return;
+      if (!presupuesto || !personas || !fechaInicioStr || !fechaSalidaStr) return;
+
+      var fechaInicio = new Date(fechaInicioStr + "T00:00:00");
+      var fechaSalida = new Date(fechaSalidaStr + "T00:00:00");
+      var dias = Math.round((fechaSalida - fechaInicio) / (1000 * 60 * 60 * 24));
+
+      if (dias <= 0) {
+        alert("La fecha de salida debe ser posterior a la fecha de llegada.");
+        return;
+      }
 
       var presupuestoPorPersona = presupuesto / personas;
-      var fechaInicio = fechaInicioStr ? new Date(fechaInicioStr + "T00:00:00") : null;
 
       var resultado = armarPropuesta(data.excursiones, dias, presupuestoPorPersona, fechaInicio);
 
@@ -283,9 +291,9 @@
       document.getElementById("armador-form").style.display = "";
       document.getElementById("nueva-consulta-btn").hidden = true;
       document.getElementById("presupuesto").value = "";
-      document.getElementById("dias").value = "";
       document.getElementById("personas").value = "";
       document.getElementById("fecha-inicio").value = "";
+      document.getElementById("fecha-salida").value = "";
     });
 
     // Delegación de eventos para reemplazos

@@ -335,6 +335,18 @@ a { color: inherit; }
 }
 .armador-form button:hover { background: #c24010; }
 
+.nueva-consulta-btn {
+  border: none;
+  background: transparent;
+  color: var(--naranja);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 0 16px;
+  display: block;
+}
+.nueva-consulta-btn:hover { text-decoration: underline; }
+
 .armador-resultado { margin-top: 28px; }
 
 .propuesta-resumen {

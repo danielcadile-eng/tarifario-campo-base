@@ -273,6 +273,19 @@
       };
 
       renderResultadoArmador();
+      document.getElementById("armador-form").style.display = "none";
+      document.getElementById("nueva-consulta-btn").hidden = false;
+    });
+
+    document.getElementById("nueva-consulta-btn").addEventListener("click", function () {
+      propuestaActual = null;
+      document.getElementById("armador-resultado").innerHTML = "";
+      document.getElementById("armador-form").style.display = "";
+      document.getElementById("nueva-consulta-btn").hidden = true;
+      document.getElementById("presupuesto").value = "";
+      document.getElementById("dias").value = "";
+      document.getElementById("personas").value = "";
+      document.getElementById("fecha-inicio").value = "";
     });
 
     // Delegación de eventos para reemplazos

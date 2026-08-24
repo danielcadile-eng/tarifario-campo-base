@@ -485,9 +485,9 @@ a { color: inherit; }
 
 .oferta-modal {
   position: relative;
-  width: 100%;
-  max-width: 660px;
-  min-height: 450px;
+  width: 650px;
+  max-width: calc(100vw - 40px);
+  min-height: 480px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
@@ -546,8 +546,8 @@ a { color: inherit; }
 
 .oferta-modal__btn {
   display: inline-block;
-  background: var(--naranja);
-  color: white;
+  background: white;
+  color: #e8500a;
   text-decoration: none;
   padding: 14px 32px;
   border-radius: 8px;
@@ -557,7 +557,7 @@ a { color: inherit; }
   border: none;
   cursor: pointer;
 }
-.oferta-modal__btn:hover { background: #c24010; transform: translateY(-1px); }
+.oferta-modal__btn:hover { background: rgba(255,255,255,0.88); transform: translateY(-1px); }
 
 .oferta-modal__close {
   position: absolute;

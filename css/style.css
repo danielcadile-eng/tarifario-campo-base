@@ -486,32 +486,26 @@ a { color: inherit; }
 .oferta-modal {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 660px;
+  min-height: 450px;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   animation: slideUp 0.28s ease;
+  background: #e8500a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-.oferta-modal__bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.45) saturate(1.2);
-}
-
-.oferta-modal__gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, rgba(31,40,75,0.6) 0%, rgba(233,88,29,0.25) 100%);
-}
+.oferta-modal__bg { display: none; }
+.oferta-modal__gradient { display: none; }
 
 .oferta-modal__body {
   position: relative;
-  padding: 48px 40px 40px;
+  padding: 56px 48px 48px;
   color: white;
   text-align: center;
 }
@@ -585,9 +579,9 @@ a { color: inherit; }
 }
 .oferta-modal__close:hover { background: rgba(255,255,255,0.3); }
 
-@media (max-width: 560px) {
+@media (max-width: 680px) {
   .oferta-modal__titulo { font-size: 28px; }
-  .oferta-modal__body { padding: 40px 24px 32px; }
+  .oferta-modal__body { padding: 48px 28px 40px; }
 }
 
 /* ---------- Footer ---------- */

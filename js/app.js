@@ -74,7 +74,6 @@
       .then(function (json) {
         var p = json.popup;
         if (!p || !p.activo) return;
-        document.getElementById("oferta-bg").style.backgroundImage = 'url("' + p.imagen + '")';
         document.getElementById("oferta-eyebrow").textContent = p.eyebrow || "";
         document.getElementById("oferta-titulo").textContent = p.titulo || "";
         document.getElementById("oferta-subtitulo").textContent = p.subtitulo || "";

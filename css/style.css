@@ -500,8 +500,6 @@ a { color: inherit; }
 
 @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-.oferta-modal__bg { display: none; }
-.oferta-modal__gradient { display: none; }
 
 .oferta-modal__body {
   position: relative;

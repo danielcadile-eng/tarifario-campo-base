@@ -485,7 +485,7 @@ a { color: inherit; }
 }
 
 .escapada-card__header {
-  background: var(--azul-oscuro);
+  background: #2d3a6b;
   color: white;
   padding: 20px 24px 16px;
 }

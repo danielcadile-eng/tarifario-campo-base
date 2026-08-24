@@ -1,0 +1,11 @@
+{
+  "popup": {
+    "activo": true,
+    "imagen": "img/campo-base-largo.jpg",
+    "eyebrow": "Temporada 2025",
+    "titulo": "ESCAPADAS A MENDOZA",
+    "subtitulo": "Alta Montaña, bodegas, termas y aventura. Armá tu escapada con Campo Base.",
+    "boton_texto": "Ver escapadas",
+    "boton_link": "#armador"
+  }
+}

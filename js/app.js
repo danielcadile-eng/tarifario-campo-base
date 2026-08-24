@@ -63,6 +63,36 @@
     if (!data) {
       cargarDatos();
     }
+    cargarPopup();
+  }
+
+  // ===================== POPUP DE OFERTA =====================
+
+  function cargarPopup() {
+    fetch("data/ofertas.json")
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        var p = json.popup;
+        if (!p || !p.activo) return;
+        document.getElementById("oferta-bg").style.backgroundImage = 'url("' + p.imagen + '")';
+        document.getElementById("oferta-eyebrow").textContent = p.eyebrow || "";
+        document.getElementById("oferta-titulo").textContent = p.titulo || "";
+        document.getElementById("oferta-subtitulo").textContent = p.subtitulo || "";
+        var btn = document.getElementById("oferta-btn");
+        btn.textContent = p.boton_texto || "Ver más";
+        btn.href = p.boton_link || "#";
+        btn.addEventListener("click", cerrarPopup);
+        document.getElementById("oferta-close").addEventListener("click", cerrarPopup);
+        document.getElementById("oferta-overlay").addEventListener("click", function (e) {
+          if (e.target === document.getElementById("oferta-overlay")) cerrarPopup();
+        });
+        document.getElementById("oferta-overlay").hidden = false;
+      })
+      .catch(function () { /* sin popup si falla el fetch */ });
+  }
+
+  function cerrarPopup() {
+    document.getElementById("oferta-overlay").hidden = true;
   }
 
   // ===================== CARGA DE DATOS =====================

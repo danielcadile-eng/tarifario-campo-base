@@ -467,6 +467,97 @@ a { color: inherit; }
 .contacto-info p { margin: 8px 0; font-size: 14px; }
 .contacto-info strong { color: var(--azul-oscuro); }
 
+/* ---------- Escapadas ---------- */
+
+.escapadas-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.escapada-card {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.escapada-card__header {
+  background: var(--azul-oscuro);
+  color: white;
+  padding: 20px 24px 16px;
+}
+
+.escapada-card__nombre {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.escapada-card__duracion {
+  font-size: 13px;
+  color: var(--celeste);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.escapada-card__body { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+.escapada-card__hoteleria { font-size: 13px; color: var(--texto-suave); }
+.escapada-card__hoteleria strong { color: var(--texto); }
+
+.escapada-card__excursiones h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--naranja);
+  margin: 0 0 8px;
+  font-family: inherit;
+}
+
+.escapada-card__excursiones ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.escapada-card__excursiones li {
+  background: var(--crema-osc);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+}
+
+.escapada-card__precios {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--borde);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.escapada-card__neto {
+  grid-column: 1 / -1;
+  background: var(--crema-osc);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.escapada-card__neto .label { font-size: 12px; font-weight: 700; color: #e8500a; }
+.escapada-card__neto .valor { font-size: 20px; font-weight: 800; color: var(--azul-oscuro); }
+
 /* ---------- Popup oferta ---------- */
 
 .oferta-overlay {

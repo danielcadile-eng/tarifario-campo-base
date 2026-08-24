@@ -68,12 +68,41 @@
 
   // ===================== POPUP DE OFERTA =====================
 
+  function renderEscapadas(escapadas) {
+    var list = document.getElementById("escapadas-list");
+    if (!list || !escapadas || !escapadas.length) return;
+    list.innerHTML = "";
+    escapadas.forEach(function (esc) {
+      var excItems = esc.incluye.map(function (e) {
+        return '<li>' + escapeHtml(e) + '</li>';
+      }).join("");
+      var card = document.createElement("div");
+      card.className = "escapada-card";
+      card.innerHTML =
+        '<div class="escapada-card__header">' +
+          '<div class="escapada-card__nombre">' + escapeHtml(esc.nombre) + '</div>' +
+          '<div class="escapada-card__duracion">' + escapeHtml(esc.duracion) + '</div>' +
+        '</div>' +
+        '<div class="escapada-card__body">' +
+          '<div class="escapada-card__hoteleria"><strong>Hotelería:</strong> ' + escapeHtml(esc.hoteleria) + '</div>' +
+          '<div class="escapada-card__excursiones"><h4>Excursiones incluidas</h4><ul>' + excItems + '</ul></div>' +
+          '<div class="escapada-card__precios">' +
+            '<div class="precio-item"><span class="precio-item__label">Precio público</span><span class="precio-item__valor">' + formatoMoneda(esc.precio_publico) + '</span></div>' +
+            '<div class="precio-item"><span class="precio-item__label">Comisión</span><span class="precio-item__valor">' + esc.comision_pct + '%</span></div>' +
+            '<div class="escapada-card__neto"><span class="label">Neto agencia</span><span class="valor">' + formatoMoneda(esc.neto_agencia) + '</span></div>' +
+          '</div>' +
+        '</div>';
+      list.appendChild(card);
+    });
+  }
+
   function cargarPopup() {
     fetch("data/ofertas.json")
       .then(function (r) { return r.json(); })
       .then(function (json) {
         var p = json.popup;
         if (!p || !p.activo) return;
+        renderEscapadas(json.escapadas);
         document.getElementById("oferta-eyebrow").textContent = p.eyebrow || "";
         document.getElementById("oferta-titulo").textContent = p.titulo || "";
         document.getElementById("oferta-subtitulo").textContent = p.subtitulo || "";

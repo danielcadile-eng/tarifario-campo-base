@@ -89,7 +89,7 @@
           '<div class="escapada-card__precios">' +
             '<div class="precio-item"><span class="precio-item__label">Precio público p/p en base a HAB DBL</span><span class="precio-item__valor">' + formatoMoneda(esc.precio_publico) + '</span></div>' +
             '<div class="precio-item"><span class="precio-item__label">Comisión</span><span class="precio-item__valor">' + esc.comision_pct + '%</span></div>' +
-            '<div class="escapada-card__neto"><span class="label">Neto agencia p/p en base HAB DBL</span><span class="valor">' + formatoMoneda(esc.neto_agencia) + '</span></div>' +
+            '<div class="escapada-card__neto"><span class="label"><span class="label__principal">Neto agencia</span><span class="label__sub">p/p en base a Hab DBL</span></span><span class="valor">' + formatoMoneda(esc.neto_agencia) + '</span></div>' +
           '</div>' +
         '</div>';
       list.appendChild(card);
